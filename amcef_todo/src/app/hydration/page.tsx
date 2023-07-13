@@ -1,9 +1,10 @@
-import getQueryClient from "@/app/utils/getQueryClient";
-import Hydrate from "@/app/utils/hydrate.client";
+import getQueryClient from "@/utils/getQueryClient";
+import Hydrate from "@/utils/hydrate.client";
 import { dehydrate } from "@tanstack/query-core";
-import { TodoList } from "@/types/apiTypes.d";
-import apiClient from "@/api/ApiHandler";
+import { TodoList } from "@/types/types.d";
+import apiClient from "@/ApiHandler";
 import { TodosList } from "./TodosList";
+import { TodoListCreationModal } from '@/app/components/TodoListCreationModal';
 
 async function getTodos() {
   const res = await apiClient.get('/ToDoList').then((res)=>res.data);
@@ -11,14 +12,23 @@ async function getTodos() {
   return todos;
 }
 
-export default async function Hydation() {
+type Props = {
+  searchParams: Record<string, string> | null | undefined
+}
+
+export default async function Hydation({ searchParams }: Props) {
+  
+  const showModal = searchParams?.modal
+  
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery(["ToDoList"], getTodos);
   const dehydratedState = dehydrate(queryClient);
 
   return (
     <Hydrate state={dehydratedState}>
-      <TodosList />
+      <TodosList 
+        showModal={showModal}
+      />
     </Hydrate>
   );
 }

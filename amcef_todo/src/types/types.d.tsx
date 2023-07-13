@@ -1,6 +1,10 @@
 export type TodoList = {
-    id: number,
+    id?: number,
     name: string,
     createdAt: Date,
     updatedAt: Date
+}
+
+export type TodoListCreationData = {
+    name: string
 }
