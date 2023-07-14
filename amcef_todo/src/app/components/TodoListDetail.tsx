@@ -83,7 +83,7 @@ export function TodoListDetail(props: {listId: string}){
                         <Switch.Label className="mr-4">Show only active todos</Switch.Label>
                         <Switch
                             checked={active}
-                            onChange={() => setDone(!active)}
+                            onChange={() => setActive(!active)}
                             className={`${active ? 'bg-teal-900' : 'bg-teal-700'}
                             relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                         >
