@@ -36,7 +36,7 @@ export function TodoListCreationModal() {
     })
   
 
-  const onSubmit = useCallback((data: todo) => mutation.mutate(data),[])
+  const onSubmit: SubmitHandler<todo> = (data: todo) => mutation.mutate(data)
 
   return (
     <div

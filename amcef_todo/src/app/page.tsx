@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="bg-gray-400 pl-60 pr-60 text-5xl">
-      <h1 className="text-white text-center">Ondrej Jedinák AMCEF TODO list zadanie</h1>
+      <h1 className="text-white text-center">Ondrej Jedinák AMCEF TODO list assignment</h1>
       
       <p className="text-white text-2xl text-center pt-9">
         This is my implementation of a case study which is part of job interview at AMCEF.

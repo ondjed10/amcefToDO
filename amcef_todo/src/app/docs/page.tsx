@@ -16,6 +16,12 @@ export default function  DocsPage(){
             Je to podľa mňa super vec, mám z toho lepší pocit ako z napr. Bootstrapu, ale CSS je bohužiaľ
             mojou slabou stránkou a teda všetko mi v tomto ohľade trvá dlhšie, ako by bolo žiaduce.
             Na druhej strane som sa opäť niečo aj naučil a aj celkovo sa vo svete frontendu cítim viac doma.
+            <br></br>
+            Celkovo mi vypracovanie projektu trvalo približne 12-13 hodín. Setup aplikácie zabral okolo 1.5 hodiny, 
+            robenie funkcionality okolo 3 hodín a zvyšok zabralo štýlovanie komponentov a študovanie dokumentácií.
+            Pri POST requestoch bude pravdepodobne treba chvíľu počkať/refreshnuť stránku. Som si vedomý tohto nedostatku,
+            ale už som do odovzdania nestihol zapracovať zmeny.
+
 
             <h1 className="text-5xl pt-6 pb-6">Routing aplikácie</h1>
             Môj spôsob routovania aplikácie je jednoduchý. Root sa nachádza na mieste, kde sa zobrazujú

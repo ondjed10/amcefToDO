@@ -5,19 +5,19 @@ import { Todo, todoItemSchemaArray } from "@/types/types.d";
 import apiClient from "@/ApiHandler";
 // import { Todo }
 import { TodoListCreationModal } from '@/app/components/TodoListCreationModal';
-import { TodoListDetail } from "@/app/components/TodoListDetail";
+import { TodoListDetail } from "@/app/todo/detail/TodoListDetail";
 
 async function getTodos(id: string) {
     const res = await apiClient.get(`/ToDoList/${id}/ToDoItem`).then((res)=>res.data);
     const todos = res as Todo[];
-    try {
-      todoItemSchemaArray.parse(todos)
-      // alert('success')
-    }
-    catch ( e ){
-      console.log(e)
-      alert('Something went wrong with request data')
-    }
+    // try {
+    //   todoItemSchemaArray.parse(todos)
+    //   // alert('success')
+    // }
+    // catch ( e ){
+    //   console.log(e)
+    //   alert('Something went wrong with request data')
+    // }
     
 
     return todos;

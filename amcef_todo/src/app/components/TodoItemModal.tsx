@@ -43,7 +43,7 @@ export function TodoItemModal(props: {todoListId: string}){
         }
     })
 
-    const onSubmit = useCallback((data: todoItem) =>{ mutation.mutate(data)}, [])
+    const onSubmit: SubmitHandler<todoItem> = (data: todoItem) => mutation.mutate(data)
 
     return (
         <div

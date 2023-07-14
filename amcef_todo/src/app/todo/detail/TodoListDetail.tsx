@@ -4,11 +4,11 @@ import apiClient from "@/ApiHandler";
 import { Todo } from "@/types/types.d";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from 'dayjs'
-import Description from "./Description";
-import { TodoList } from "@/app/todo/TodosList";
+import Description from "../../components/Description";
+import { TodoList } from "@/app/todo/detail/TodoList";
 import { useState } from "react";
 import { Switch } from "@headlessui/react";
-import { TodoItemModal } from "./TodoItemModal";
+import { TodoItemModal } from "../../components/TodoItemModal";
 import Link from "next/link";
 
 
