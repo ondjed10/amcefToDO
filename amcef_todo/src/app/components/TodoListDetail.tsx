@@ -5,7 +5,7 @@ import { Todo } from "@/types/types.d";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from 'dayjs'
 import Description from "./Description";
-import { TodoList } from "../hydration/detail/TodoList";
+import { TodoList } from "@/app/todo/TodosList";
 import { useState } from "react";
 import { Switch } from "@headlessui/react";
 import { TodoItemModal } from "./TodoItemModal";
@@ -47,27 +47,25 @@ export function TodoListDetail(props: {listId: string, showModal: string}){
         filteredData = filteredData?.filter((todo) => todo.title.toLowerCase().includes(search.toLowerCase()))
     }
 
+    // filteredData = filteredData?.sort((todo1, todo2) => todo2.deadline.getTime() - todo1.deadline.getTime())
 
     return (
-        <div className="bg-teal-400">
+        <div className="bg-gray-600">
 
-
-            {isLoading ? <div>
-                Loading items...
-            </div> : <></>}
-
-            <div className="bg-white pl-16 pr-16">
-                <div className="ps-16 pt-24  flex justify-center">   
-                <div>
-                    <input value={search} type="text" id="first_name" onChange={(e) => changeSearch(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+            <div className="bg-white h-fit">
+                {isLoading ? <div>
+                    Loading items...
+                </div> : <></>}
+                <div className="flex justify-center">   
+                
                     
                     <Switch.Group>
                         <div className="flex items-center">
-                        <Switch.Label className="mr-4">Show only done todos</Switch.Label>
+                        <Switch.Label className="mr-4">Done</Switch.Label>
                         <Switch
                             checked={done}
                             onChange={() => setDone(!done)}
-                            className={`${done ? 'bg-teal-900' : 'bg-teal-700'}
+                            className={`${done ? 'bg-blue-700' : 'bg-gray-700'}
                             relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                         >
                             <span className="sr-only">Use setting</span>
@@ -82,11 +80,11 @@ export function TodoListDetail(props: {listId: string, showModal: string}){
 
                     <Switch.Group>
                         <div className="flex items-center">
-                        <Switch.Label className="mr-4">Show only active todos</Switch.Label>
+                        <Switch.Label className="mr-4">Active</Switch.Label>
                         <Switch
                             checked={active}
                             onChange={() => setActive(!active)}
-                            className={`${active ? 'bg-teal-900' : 'bg-teal-700'}
+                            className={`${active ? 'bg-blue-700' : 'bg-gray-700'}
                             relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                         >
                             <span className="sr-only">Use setting</span>
@@ -98,17 +96,22 @@ export function TodoListDetail(props: {listId: string, showModal: string}){
                         </Switch>
                     </div>
                     </Switch.Group>
-                </div>
+                
                     <Link 
                     href={{
-                        pathname: "/hydration/detail",
+                        pathname: "/todo/detail",
                         query: {
                             id: props.listId,
                             modal: true
                         }
                     }} 
-                    type="button"
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add new one</Link>
+                    >
+                    <button className="btn btn-primary ml-6">Add new item</button> </Link>
+                    
+                    <div className="max-h-fit ml-6">
+                        <input value={search} onChange={(e) => changeSearch(e.target.value)} type="text" placeholder="type here to filter results" className="input input-bordered w-full max-w-xs" />
+
+                    </div>
                 </div>
             </div>
             

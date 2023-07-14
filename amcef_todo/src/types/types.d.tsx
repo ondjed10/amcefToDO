@@ -30,18 +30,18 @@ export type TodoCreationData = {
 export const todoSchema = z.object({
     id: z.number().optional(),
     name: z.string(),
-    createdAt: z.date(),
-    updatedAt: z.date()
+    createdAt: z.date().optional(),
+    updatedAt: z.date().optional()
 })
 
 export const todoItemSchema = z.object({
     id: z.number().optional(),
-    ToDoListId: z.number().positive(),
-    createdAt: z.date(),
-    deadline: z.date().min(new Date()),
+    ToDoListId: z.number().positive().optional(),
+    createdAt: z.date().optional(),
+    deadline: z.date(),
     desc: z.string(),
     title: z.string(),
-    done: z.boolean()
+    done: z.boolean().optional()
 })
 
 export const todoSchemaArray = z.array(todoSchema)

@@ -1,13 +1,16 @@
 "use client";
 import * as z from 'zod';
 import apiClient from "@/ApiHandler";
-import { TodoList, TodoListCreationData, todoSchema } from "@/types/types.d";
+import { TodoList, TodoListCreationData } from "@/types/types.d";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback } from "react";
 
+const todoSchema = z.object({
+  name: z.string(),
+});
 
 type todo = z.infer<typeof todoSchema>
 export function TodoListCreationModal() {
@@ -63,25 +66,30 @@ export function TodoListCreationModal() {
               >
                 Nový TODO list
               </h3>
-              <div className="mt-2">
-                <p className="text-sm text-gray-500">Nazov todo listu</p>
-              </div>
             </div>
           </div>
+          
+          <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                      <span className="label-text">Name</span>
+                  </label>
+                  <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" {...register('name')}/>
+              </div>
+            
+              <input className='btn btn-primary mt-5' type="submit" />
+          </form>  
+        
           <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
             <Link
-              href="/hydration"
+              href="/todo"
               type="button"
               className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
             >
-              OK
+              Exit
             </Link>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <input {...register("name")} />
-            <input type="submit" />
-          </form>  
-        
+
         </div>
       </div>
     </div>

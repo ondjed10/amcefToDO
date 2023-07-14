@@ -7,13 +7,13 @@ import { TodoCard } from "./Todo";
 export function TodoList(props: {data: Todo[]}){
 
     return (
-        <ul className="bg-white rounded-lg shadow divide-y divide-gray-200 max-w-sm">
+        <div className="">
             {props.data.map((todo) => {
                 return (
                     <TodoCard todo={todo}/>
                 )
             })}
-        </ul>
+        </div>
     )
 
 }

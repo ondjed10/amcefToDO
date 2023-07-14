@@ -8,7 +8,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback } from 'react';
 
-type todoItem = z.infer<typeof todoItemSchema>
+const todoSchema = z.object({
+    title: z.string(),
+    desc: z.string(),
+    deadline: z.date()
+});
+  
+
+type todoItem = z.infer<typeof todoSchema>
 
 export function TodoItemModal(props: {todoListId: string}){
 
@@ -19,7 +26,7 @@ export function TodoItemModal(props: {todoListId: string}){
         watch,
         formState: {errors}
     } = useForm<todoItem>({
-        resolver: zodResolver(todoItemSchema)
+        resolver: zodResolver(todoSchema)
     })
 
     const mutation = useMutation({
@@ -36,7 +43,7 @@ export function TodoItemModal(props: {todoListId: string}){
         }
     })
 
-    const onSubmit = useCallback((data: todoItem) => mutation.mutate(data), [])
+    const onSubmit = useCallback((data: todoItem) =>{ mutation.mutate(data)}, [])
 
     return (
         <div
@@ -57,39 +64,55 @@ export function TodoItemModal(props: {todoListId: string}){
                 >
                 &#8203;
                 </span>
-                <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-                <div className="sm:flex sm:items-start">
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3
-                        className="text-lg leading-6 font-medium text-gray-900"
-                        id="modal-title"
-                    >
-                        Nový TODO item
-                    </h3>
+                <div className="inline-block align-bottom bg-gray-300 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                    <div className="sm:flex sm:items-start">
+                        <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3
+                            className="text-lg leading-6 font-medium text-gray-900"
+                            id="modal-title"
+                        >
+                            Nový TODO item
+                        </h3>
+                        </div>
                     </div>
-                </div>
-                <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                    <Link
-                        href={{
-                            pathname:"/hydration/detail",
-                            query: {
-                                id: props.todoListId
-                            }
-                        }}
-                        
-                        
-                        type="button"
-                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    >
-                    OK
-                    </Link>
-                </div>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <input {...register("title")} />
-                    <input {...register("desc")} />
-                    <input type="date" {...register("deadline")} />
-                    <input type="submit" />
-                </form>  
+                
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Title</span>
+                                {errors.desc?.message && <p>{errors.desc?.message}</p>}
+                            </label>
+                            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" {...register('title')}/>
+                        </div>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Description</span>
+                            </label>
+                            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" {...register('desc')}/>
+                        </div>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Deadline</span>
+                            </label>
+                            <input type="date" className="input input-bordered w-full max-w-xs " {...register("deadline", {valueAsDate: true})} />
+                        </div>
+
+                        <input className='btn btn-primary mt-5' type="submit" />
+                    </form>  
+                    <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                        <Link
+                            href={{
+                                pathname:"/todo/detail",
+                                query: {
+                                    id: props.todoListId
+                                }
+                            }} 
+                            type="button"
+                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                        >
+                        Exit
+                        </Link>
+                    </div>
                 
                 </div>
             </div>
