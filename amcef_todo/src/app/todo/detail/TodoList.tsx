@@ -10,7 +10,7 @@ export function TodoList(props: {data: Todo[]}){
         <div className="">
             {props.data.map((todo) => {
                 return (
-                    <TodoCard todo={todo}/>
+                    <TodoCard key={todo.id} todo={todo}/>
                 )
             })}
         </div>

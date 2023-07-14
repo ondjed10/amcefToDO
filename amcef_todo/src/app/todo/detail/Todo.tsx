@@ -24,7 +24,7 @@ export function TodoCard(props: {todo: Todo}){
 
             const prev = queryClient.getQueryData(['Todo'])
 
-            queryClient.setQueryData(['Todo'], (old: any) => old.filter((todo) => todo.id !== data.id))
+            queryClient.setQueryData(['Todo'], (old: any) => old.filter((todo: Todo) => todo.id !== data.id) )
 
             return { prev }
         }

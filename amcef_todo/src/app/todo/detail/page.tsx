@@ -29,8 +29,8 @@ type Props = {
 
 export default async function Hydation({ searchParams }: Props) {
   
-  const id = searchParams?.id
-  const showModal = searchParams?.modal
+  const id = searchParams?.id || "1"
+  const showModal = searchParams?.modal || ""
   
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery(["Todo"], () => getTodos(id));

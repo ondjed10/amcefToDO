@@ -46,7 +46,7 @@ export function TodosList(props: {showModal: string}){
                 {/* <ul className="bg-white rounded-lg shadow divide-y divide-gray-200 max-w-sm"> */}
                         {data.map((td) => {
                             return (
-                                <div className="px-6 py-4 mt-3">
+                                <div key={td.id} className="px-6 py-4 mt-3">
                                     <Link href={{
                                         pathname: "/todo/detail",
                                         query: {
