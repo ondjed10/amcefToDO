@@ -14,8 +14,16 @@ export function TodoCard(props: {todo: Todo}){
         }
     })
 
+    const deleteTodo = useMutation({
+        mutationFn: (data: Todo) => {
+            return apiClient.delete(`/ToDoList/${data.ToDoListId}/ToDoItem/${data.id}`)
+        }
+    })
+
 
     const onDone = (data: Todo) => mutation.mutate(data)
+
+    const onDelete = (data: Todo) => deleteTodo.mutate(data)
 
     const crossed = props.todo.done ? "line-through" : ""
 
@@ -27,6 +35,7 @@ export function TodoCard(props: {todo: Todo}){
                 <span className="text-gray-500 text-xs">Dátum vytvorenia: {dayjs(new Date(props.todo.createdAt)).format("DD.MM.YYYY HH:mm")}</span>
                 <span className={props.todo.done ? "text-green-600 text-md" : "text-red-600 text-md"}>Stav</span>
                 <button onClick={() => onDone(props.todo)} className="border-green-500 border-solid border-2 bg-green-500 text-white">Mark as complete</button>
+                <button onClick={() => onDelete(props.todo)} className="border-red-500 border-solid border-2 bg-red-500 text-white">Delete todo</button>
             </div>
             <Description todo={props.todo} />
         

@@ -10,10 +10,10 @@ import { useState } from "react";
 import { Switch } from "@headlessui/react";
 
 
-export function TodoListDetail(props: {listId: string}){
+export function TodoListDetail(props: {listId: string, showModal: string}){
 
     async function getTodos() {
-        const res = await apiClient.get(`/ToDoList/1/ToDoItem`).then((res)=>res.data);
+        const res = await apiClient.get(`/ToDoList/${props.listId}/ToDoItem`).then((res)=>res.data);
         const todos = res as Todo[];
         return todos;
     }
@@ -23,7 +23,7 @@ export function TodoListDetail(props: {listId: string}){
     const [search, setSearch] = useState("")
     const [done, setDone] = useState(false)
     const [active, setActive] = useState(false)
-
+    const [toggleNew, setToggleNew] = useState(false)
 
     const changeSearch = (value: string) => {
         setSearch(value)
@@ -97,13 +97,13 @@ export function TodoListDetail(props: {listId: string}){
                     </div>
                     </Switch.Group>
                 </div>
-                    <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add new one</button>
+                    <a  href="/hydration/detail?modal=true" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add new one</a>
                 </div>
             </div>
             
             
             <div className="ps-36 pt-7 flex justify-center">
-            
+                
                 {filteredData ? <TodoList data={filteredData} /> : <p>No match found</p>}
             </div>
            

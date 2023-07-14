@@ -37,13 +37,18 @@ export function TodosList(props: {showModal: string}){
                         {data.map((td) => {
                             return (
                                 <li className="px-6 py-4 mt-3">
-                                    <Link href="/hydration/detail">
+                                    <Link href={{
+                                        pathname: "/hydration/detail",
+                                        query: {
+                                            id: td.id
+                                        }
+                                    }}  >
                                         <div className="flex justify-between">
                                             <span className="font-semibold text-lg">{td.name}</span>
                                             <span className="text-gray-500 text-xs">Dátum vytvorenia: {new Date(td.createdAt).toISOString()}</span>
                                         </div>
-                                        <p className="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
-                                
+                                        {/* <p className="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
+                                 */}
                                     </Link>
                                 </li>
                             )
