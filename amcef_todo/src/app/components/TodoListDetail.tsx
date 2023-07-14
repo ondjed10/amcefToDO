@@ -1,11 +1,12 @@
 "use client";
 
 import apiClient from "@/ApiHandler";
-import { Todo, TodoList } from "@/types/types.d";
+import { Todo } from "@/types/types.d";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from 'dayjs'
-import { Disclosure } from "@headlessui/react";
 import Description from "./Description";
+import { TodoList } from "../hydration/detail/TodoList";
+import { useState } from "react";
 
 
 export function TodoListDetail(props: {listId: string}){
@@ -18,6 +19,17 @@ export function TodoListDetail(props: {listId: string}){
     
     const { data, isLoading, isError } = useQuery({queryKey: ['Todo'], queryFn: () => getTodos()})
 
+    const [search, setSearch] = useState("")
+
+    const changeSearch = (value: string) => {
+        setSearch(value)
+    }
+
+    let filteredData = data
+    if (search) {
+        filteredData = filteredData?.filter((todo) => todo.title.toLowerCase().includes(search.toLowerCase()))
+    }
+
     return (
         <div className="bg-teal-400">
 
@@ -26,27 +38,19 @@ export function TodoListDetail(props: {listId: string}){
                 Loading items...
             </div> : <></>}
 
-            <div className="ps-16 pt-24 flex justify-center">
-                <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add new one</button>
+            <div className="bg-white pl-16 pr-16">
+                <div className="ps-16 pt-24  flex justify-center">   
+                <div>
+                <input value={search} type="text" id="first_name" onChange={(e) => changeSearch(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+                </div>
+                    <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add new one</button>
+                </div>
             </div>
+            
             
             <div className="ps-36 pt-7 flex justify-center">
             
-            {data && <ul className="bg-white rounded-lg shadow divide-y divide-gray-200 max-w-sm">
-                {data.map((todo) => {
-                    return (
-                        <li className="px-6 py-4 mt-3">
-                        
-                            <div className="flex justify-between">
-                                <span className="font-semibold text-lg">{todo.title}</span>
-                                <span className="text-gray-500 text-xs">Dátum vytvorenia: {dayjs(new Date(todo.createdAt)).format("DD.MM.YYYY HH:mm")}</span>
-                            </div>
-                            <Description todo={todo} />
-                        
-                        </li>
-                    )
-                })}
-              </ul> }  
+                {filteredData ? <TodoList data={filteredData} /> : <p>No match found</p>}
             </div>
            
         </div>
