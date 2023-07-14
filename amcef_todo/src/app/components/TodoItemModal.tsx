@@ -1,11 +1,14 @@
 "use client";
-
+import * as z from 'zod';
 import apiClient from "@/ApiHandler";
-import { Todo, TodoCreationData } from "@/types/types.d";
+import { Todo, TodoCreationData, todoItemSchema } from "@/types/types.d";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useCallback } from 'react';
 
+type todoItem = z.infer<typeof todoItemSchema>
 
 export function TodoItemModal(props: {todoListId: string}){
 
@@ -15,7 +18,9 @@ export function TodoItemModal(props: {todoListId: string}){
         handleSubmit,
         watch,
         formState: {errors}
-    } = useForm<TodoCreationData>()
+    } = useForm<todoItem>({
+        resolver: zodResolver(todoItemSchema)
+    })
 
     const mutation = useMutation({
         mutationFn: (data: TodoCreationData) => {
@@ -31,7 +36,7 @@ export function TodoItemModal(props: {todoListId: string}){
         }
     })
 
-    const onSubmit: SubmitHandler<TodoCreationData> = (data) => mutation.mutate(data)
+    const onSubmit = useCallback((data: todoItem) => mutation.mutate(data), [])
 
     return (
         <div

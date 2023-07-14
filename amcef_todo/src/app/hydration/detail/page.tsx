@@ -1,7 +1,7 @@
 import getQueryClient from "@/utils/getQueryClient";
 import Hydrate from "@/utils/hydrate.client";
 import { dehydrate } from "@tanstack/query-core";
-import { Todo } from "@/types/types.d";
+import { Todo, todoItemSchemaArray } from "@/types/types.d";
 import apiClient from "@/ApiHandler";
 // import { Todo }
 import { TodoListCreationModal } from '@/app/components/TodoListCreationModal';
@@ -10,6 +10,16 @@ import { TodoListDetail } from "@/app/components/TodoListDetail";
 async function getTodos(id: string) {
     const res = await apiClient.get(`/ToDoList/${id}/ToDoItem`).then((res)=>res.data);
     const todos = res as Todo[];
+    try {
+      todoItemSchemaArray.parse(todos)
+      // alert('success')
+    }
+    catch ( e ){
+      console.log(e)
+      alert('Something went wrong with request data')
+    }
+    
+
     return todos;
 }
 

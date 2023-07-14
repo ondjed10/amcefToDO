@@ -1,14 +1,15 @@
 "use client";
-
+import * as z from 'zod';
 import apiClient from "@/ApiHandler";
-import { TodoList, TodoListCreationData } from "@/types/types.d";
+import { TodoList, TodoListCreationData, todoSchema } from "@/types/types.d";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useCallback } from "react";
 
 
-
-
+type todo = z.infer<typeof todoSchema>
 export function TodoListCreationModal() {
 
   const {
@@ -16,7 +17,9 @@ export function TodoListCreationModal() {
     handleSubmit,
     watch,
     formState: { errors }
-  } = useForm<TodoListCreationData>()
+  } = useForm<todo>({
+    resolver: zodResolver(todoSchema)
+  })
 
   const mutation =  useMutation({
     mutationFn: (data: TodoListCreationData) => {
@@ -30,7 +33,7 @@ export function TodoListCreationModal() {
     })
   
 
-  const onSubmit: SubmitHandler<TodoListCreationData> = (data) => mutation.mutate(data)
+  const onSubmit = useCallback((data: todo) => mutation.mutate(data),[])
 
   return (
     <div

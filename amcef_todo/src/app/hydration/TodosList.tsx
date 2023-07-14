@@ -1,7 +1,7 @@
 "use client";
-
+import * as z from 'zod';
 import apiClient from "@/ApiHandler";
-import { TodoList } from "@/types/types.d";
+import { TodoList, todo, todoSchemaArray } from "@/types/types.d";
 import { useQuery } from "@tanstack/react-query";
 import { TodoListCreationModal } from "../components/TodoListCreationModal";
 import Link from "next/link";
@@ -9,8 +9,17 @@ import Link from "next/link";
 
 async function getTodos() {
     const res = await apiClient.get('/ToDoList').then((res)=>res.data);
-    const todos = res as TodoList[];
-    return todos;
+    // const todos = res as TodoList[];
+    try {
+        // todoSchemaArray.parse(res)
+    }
+    catch ( e ) {
+        console.log(e)
+        alert('Something went wrong with request data')
+    }
+    return res as todo
+    
+    
 }
 
 export function TodosList(props: {showModal: string}){
