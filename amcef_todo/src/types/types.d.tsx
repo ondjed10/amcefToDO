@@ -15,7 +15,8 @@ export type Todo = {
     createdAt: Date,
     deadline: Date,
     desc: string,
-    title: string
+    title: string,
+    done: boolean
 }
 
 export type TodoCreationData = {
